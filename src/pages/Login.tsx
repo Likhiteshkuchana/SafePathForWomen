@@ -1,20 +1,94 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Shield, User, Lock, ArrowRight } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const validateForm = () => {
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    if (!password) {
+      toast({
+        title: "Error",
+        description: "Please enter your password",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    return true;
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', { email });
-    // In a real app, this would connect to your authentication logic
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // In a real app, this would connect to your authentication API
+      console.log('Login attempt:', { email });
+      
+      // Simulate API call with timeout
+      setTimeout(() => {
+        // For demo purposes, we'll check for a test account
+        // In a real app, this would be handled by your authentication system
+        if (email === 'demo@safepath.com' && password === 'password123') {
+          toast({
+            title: "Login successful!",
+            description: "Welcome back to SafePath",
+          });
+          
+          // Save user session (in a real app, this would be a JWT token)
+          localStorage.setItem('safepath_user', JSON.stringify({ 
+            email, 
+            name: 'Demo User',
+            isLoggedIn: true 
+          }));
+          
+          // Redirect to dashboard after successful login
+          navigate('/dashboard');
+        } else {
+          toast({
+            title: "Login failed",
+            description: "Invalid email or password. Try demo@safepath.com / password123",
+            variant: "destructive",
+          });
+        }
+        
+        setIsLoading(false);
+      }, 1500);
+    } catch (error) {
+      console.error('Login error:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -82,6 +156,8 @@ const Login = () => {
                       id="remember"
                       type="checkbox"
                       className="h-4 w-4 text-safepath-purple focus:ring-safepath-purple border-gray-300 rounded"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
                     />
                     <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
                       Remember me
@@ -91,9 +167,22 @@ const Login = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-safepath-purple hover:bg-safepath-purple-dark text-white"
+                    disabled={isLoading}
                   >
-                    Sign In
-                    <ArrowRight size={16} className="ml-2" />
+                    {isLoading ? (
+                      <span className="flex items-center">
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Signing in...
+                      </span>
+                    ) : (
+                      <>
+                        Sign In
+                        <ArrowRight size={16} className="ml-2" />
+                      </>
+                    )}
                   </Button>
                 </form>
                 
@@ -104,6 +193,11 @@ const Login = () => {
                       Sign up
                     </Link>
                   </p>
+                  <div className="mt-4 text-xs text-gray-500">
+                    <p>Demo credentials:</p>
+                    <p>Email: demo@safepath.com</p>
+                    <p>Password: password123</p>
+                  </div>
                 </div>
               </div>
             </div>
