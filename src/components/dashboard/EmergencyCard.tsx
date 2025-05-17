@@ -1,5 +1,5 @@
 
-import { AlertTriangle, PhoneCall, Recording, Share2 } from 'lucide-react';
+import { AlertTriangle, PhoneCall, Mic, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const EmergencyCard = () => {
@@ -31,7 +31,7 @@ const EmergencyCard = () => {
           variant="outline" 
           className="border-gray-300 text-gray-700 hover:bg-gray-100 flex flex-col h-auto py-3"
         >
-          <Recording size={20} className="mb-1" />
+          <Mic size={20} className="mb-1" />
           <span className="text-xs">Record</span>
         </Button>
         <Button 
