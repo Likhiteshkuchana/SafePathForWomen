@@ -48,32 +48,54 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // In a real app, this would connect to your authentication API
       console.log('Login attempt:', { email });
       
-      // Simulate API call with timeout
+      // First try to find the user in the registered users
+      const users = JSON.parse(localStorage.getItem('safepath_users') || '[]');
+      const user = users.find((u: any) => u.email === email && u.password === password);
+      
       setTimeout(() => {
-        // For demo purposes, we'll check for a test account
-        // In a real app, this would be handled by your authentication system
-        if (email === 'demo@safepath.com' && password === 'password123') {
+        // Check if the user exists in our registered users
+        if (user) {
+          // Update user's login status
+          user.isLoggedIn = true;
+          localStorage.setItem('safepath_users', JSON.stringify(users));
+          
+          // Store the current user session
+          localStorage.setItem('safepath_user', JSON.stringify({
+            email: user.email,
+            name: user.fullName,
+            isLoggedIn: true
+          }));
+          
           toast({
             title: "Login successful!",
-            description: "Welcome back to SafePath",
+            description: `Welcome back, ${user.fullName}!`,
           });
           
-          // Save user session (in a real app, this would be a JWT token)
+          // Redirect to dashboard
+          navigate('/dashboard');
+        } 
+        // If not found in registered users, fall back to the demo account
+        else if (email === 'demo@safepath.com' && password === 'password123') {
+          toast({
+            title: "Demo Login successful!",
+            description: "Welcome to the SafePath demo account",
+          });
+          
           localStorage.setItem('safepath_user', JSON.stringify({ 
             email, 
             name: 'Demo User',
             isLoggedIn: true 
           }));
           
-          // Redirect to dashboard after successful login
           navigate('/dashboard');
-        } else {
+        } 
+        // If neither condition is met, show login failed message
+        else {
           toast({
             title: "Login failed",
-            description: "Invalid email or password. Try demo@safepath.com / password123",
+            description: "Invalid email or password. Please try again or register for an account.",
             variant: "destructive",
           });
         }
@@ -152,7 +174,7 @@ const Login = () => {
                   </div>
 
                   <div className="flex items-center">
-                    <Input
+                    <input
                       id="remember"
                       type="checkbox"
                       className="h-4 w-4 text-safepath-purple focus:ring-safepath-purple border-gray-300 rounded"
