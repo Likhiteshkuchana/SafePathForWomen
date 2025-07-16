@@ -84,7 +84,7 @@ const Terms = () => {
                   Questions about these terms? Contact us at legal@safepath.com or through our 
                   <a href="/contact" className="text-safepath-purple hover:underline ml-1">contact page</a>.
                 </p>
-              </div>
+              </section>
             </div>
           </div>
         </div>
