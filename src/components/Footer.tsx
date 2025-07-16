@@ -53,7 +53,7 @@ const Footer = () => {
               <li><Link to="/dashboard" className="text-gray-600 hover:text-safepath-purple transition-colors">Dashboard</Link></li>
               <li><Link to="/emergency" className="text-gray-600 hover:text-safepath-purple transition-colors">Emergency Services</Link></li>
               <li><Link to="/features" className="text-gray-600 hover:text-safepath-purple transition-colors">Safety Tips</Link></li>
-              <li><Link to="/contact" className="text-gray-600 hover:text-safepath-purple transition-colors">Report a Zone</Link></li>
+              <li><Link to="/support" className="text-gray-600 hover:text-safepath-purple transition-colors">Report a Zone</Link></li>
             </ul>
           </div>
 
@@ -63,8 +63,8 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><Link to="/privacy" className="text-gray-600 hover:text-safepath-purple transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-gray-600 hover:text-safepath-purple transition-colors">Terms of Service</Link></li>
-              <li><Link to="/contact" className="text-gray-600 hover:text-safepath-purple transition-colors">Support</Link></li>
-              <li><Link to="/contact" className="text-gray-600 hover:text-safepath-purple transition-colors">Help Center</Link></li>
+              <li><Link to="/support" className="text-gray-600 hover:text-safepath-purple transition-colors">Support</Link></li>
+              <li><Link to="/support" className="text-gray-600 hover:text-safepath-purple transition-colors">Help Center</Link></li>
             </ul>
           </div>
         </div>
