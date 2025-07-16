@@ -9,38 +9,43 @@ interface CheckIn {
   sentiment: 'safe' | 'stress' | 'danger';
 }
 
-const checkIns: CheckIn[] = [
-  {
-    id: 1,
-    time: '5:30 PM',
-    mode: 'text',
-    response: "I'm at the coffee shop, all good!",
-    sentiment: 'safe'
-  },
-  {
-    id: 2,
-    time: '6:15 PM',
-    mode: 'voice',
-    response: "Walking to the bus stop now",
-    sentiment: 'safe'
-  },
-  {
-    id: 3,
-    time: '6:45 PM',
-    mode: 'text',
-    response: "Almost home, taking a different route",
-    sentiment: 'stress'
-  },
-  {
-    id: 4,
-    time: '7:00 PM',
-    mode: 'voice',
-    response: "Made it to my building, I'm safe",
-    sentiment: 'safe'
-  }
-];
+interface CheckInLogsProps {
+  userEmail: string;
+}
 
-const CheckInLogs = () => {
+const CheckInLogs = ({ userEmail }: CheckInLogsProps) => {
+  // In a real app, this would fetch actual user check-ins based on userEmail
+  const checkIns: CheckIn[] = [
+    {
+      id: 1,
+      time: '5:30 PM',
+      mode: 'text',
+      response: "I'm at the coffee shop, all good!",
+      sentiment: 'safe'
+    },
+    {
+      id: 2,
+      time: '6:15 PM',
+      mode: 'voice',
+      response: "Walking to the bus stop now",
+      sentiment: 'safe'
+    },
+    {
+      id: 3,
+      time: '6:45 PM',
+      mode: 'text',
+      response: "Almost home, taking a different route",
+      sentiment: 'stress'
+    },
+    {
+      id: 4,
+      time: '7:00 PM',
+      mode: 'voice',
+      response: "Made it to my building, I'm safe",
+      sentiment: 'safe'
+    }
+  ];
+
   const getSentimentBadge = (sentiment: CheckIn['sentiment']) => {
     switch (sentiment) {
       case 'safe':
@@ -62,7 +67,7 @@ const CheckInLogs = () => {
 
   return (
     <div className="dashboard-card">
-      <h3 className="font-poppins font-semibold text-lg mb-4">Check-In History</h3>
+      <h3 className="font-poppins font-semibold text-lg mb-4">Recent Check-In History</h3>
       
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">

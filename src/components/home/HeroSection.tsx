@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock } from 'lucide-react';
+import { MapPin, Shield } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -27,16 +27,16 @@ const HeroSection = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/trip/new">
+              <Link to="/register">
                 <Button className="bg-safepath-purple hover:bg-safepath-purple-dark text-white px-6 py-6 h-auto text-lg">
-                  <MapPin size={20} className="mr-2" />
-                  Start a Trip
+                  <Shield size={20} className="mr-2" />
+                  Get Started Free
                 </Button>
               </Link>
-              <Link to="/dashboard">
+              <Link to="/how-it-works">
                 <Button variant="outline" className="border-safepath-purple text-safepath-purple hover:bg-safepath-purple-soft px-6 py-6 h-auto text-lg">
-                  <Clock size={20} className="mr-2" />
-                  View Dashboard
+                  <MapPin size={20} className="mr-2" />
+                  Learn How It Works
                 </Button>
               </Link>
             </div>
@@ -64,20 +64,20 @@ const HeroSection = () => {
               <div className="bg-safepath-purple-soft p-4 rounded-2xl">
                 <div className="bg-white rounded-xl overflow-hidden shadow-lg">
                   <img 
-                    src="https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=1974&auto=format&fit=crop"
-                    alt="Woman walking safely with SafePath" 
+                    src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                    alt="Woman feeling safe and confident while using SafePath" 
                     className="w-full h-auto"
                   />
                   <div className="p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-gray-800">Active Trip</h3>
-                        <p className="text-sm text-gray-500">Walk home - 10 min remaining</p>
+                        <h3 className="font-medium text-gray-800">Safety Monitoring</h3>
+                        <p className="text-sm text-gray-500">AI-powered protection active</p>
                       </div>
-                      <span className="status-badge status-safe">Safe</span>
+                      <span className="status-badge status-safe">Protected</span>
                     </div>
                     <div className="mt-3 h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className="bg-safepath-purple h-full rounded-full" style={{ width: "70%" }}></div>
+                      <div className="bg-safepath-purple h-full rounded-full" style={{ width: "100%" }}></div>
                     </div>
                   </div>
                 </div>

@@ -1,11 +1,18 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Shield } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem('safepath_user') || '{}');
+    setIsLoggedIn(!!user.email);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -42,16 +49,26 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/login">
-              <Button variant="outline" className="border-safepath-purple text-safepath-purple hover:bg-safepath-purple-soft">
-                Login
-              </Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button className="bg-safepath-purple hover:bg-safepath-purple-dark text-white">
-                Dashboard
-              </Button>
-            </Link>
+            {isLoggedIn ? (
+              <Link to="/dashboard">
+                <Button className="bg-safepath-purple hover:bg-safepath-purple-dark text-white">
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" className="border-safepath-purple text-safepath-purple hover:bg-safepath-purple-soft">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button className="bg-safepath-purple hover:bg-safepath-purple-dark text-white">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -80,16 +97,26 @@ const Navbar = () => {
                   </Link>
                 ))}
                 <div className="pt-4 flex flex-col space-y-3">
-                  <Link to="/login" onClick={closeMenu}>
-                    <Button variant="outline" className="w-full border-safepath-purple text-safepath-purple hover:bg-safepath-purple-soft">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/dashboard" onClick={closeMenu}>
-                    <Button className="w-full bg-safepath-purple hover:bg-safepath-purple-dark text-white">
-                      Dashboard
-                    </Button>
-                  </Link>
+                  {isLoggedIn ? (
+                    <Link to="/dashboard" onClick={closeMenu}>
+                      <Button className="w-full bg-safepath-purple hover:bg-safepath-purple-dark text-white">
+                        Dashboard
+                      </Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Link to="/login" onClick={closeMenu}>
+                        <Button variant="outline" className="w-full border-safepath-purple text-safepath-purple hover:bg-safepath-purple-soft">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link to="/register" onClick={closeMenu}>
+                        <Button className="w-full bg-safepath-purple hover:bg-safepath-purple-dark text-white">
+                          Get Started
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
